@@ -1,0 +1,34 @@
+@model DealershipDomain.Model.Car
+
+@{
+    ViewData["Title"] = "Деталі автомобіля";
+}
+
+<h1>Деталі автомобіля</h1>
+<hr />
+
+<div class="card shadow-sm mb-4">
+    <div class="card-header fw-semibold fs-5">
+        🚗 @Model.Brand?.Name — @Model.ModelName
+    </div>
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.ModelName)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.ModelName)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Year)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Year)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Price)</dt>
+            <dd class="col-sm-9">$@Model.Price.ToString("N0")</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Brand)</dt>
+            <dd class="col-sm-9">@(Model.Brand?.Name ?? "—") (@(Model.Brand?.Country ?? "—"))</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="d-flex gap-2">
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-info">✏️ Редагувати</a>
+    <a asp-action="Index" asp-route-id="@Model.BrandId" asp-route-name="@Model.Brand?.Name" class="btn btn-outline-secondary">← Назад до списку</a>
+</div>

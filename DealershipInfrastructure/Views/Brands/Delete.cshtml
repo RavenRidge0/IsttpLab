@@ -1,0 +1,32 @@
+@model DealershipDomain.Model.Brand
+
+@{
+    ViewData["Title"] = "Видалення бренду";
+}
+
+<h1>Видалення бренду</h1>
+
+<div class="alert alert-warning" role="alert">
+    ⚠️ Ви дійсно хочете видалити цей бренд? Усі пов'язані автомобілі (@Model.Cars.Count шт.) також будуть видалені!
+</div>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-header fw-semibold">Інформація про бренд</div>
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Name)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Name)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Country)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Country)</dd>
+        </dl>
+    </div>
+</div>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <div class="d-flex gap-2">
+        <input type="submit" value="🗑️ Так, видалити" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-outline-secondary">← Скасувати</a>
+    </div>
+</form>

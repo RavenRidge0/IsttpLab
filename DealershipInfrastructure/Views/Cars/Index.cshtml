@@ -1,0 +1,74 @@
+@model IEnumerable<DealershipDomain.Model.Car>
+
+@{
+    // Якщо бренд задано — показуємо авто конкретного бренду, інакше — всі
+    bool isFiltered = ViewBag.BrandId != null;
+    string pageTitle = isFiltered
+        ? $"Автомобілі бренду {ViewBag.BrandName}"
+        : "Усі автомобілі";
+    ViewData["Title"] = pageTitle;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>@pageTitle</h1>
+    <div class="d-flex gap-2">
+        <a asp-action="Create" asp-route-id="@ViewBag.BrandId" class="btn btn-primary">
+            ➕ Додати автомобіль
+        </a>
+        @if (isFiltered)
+        {
+            <a asp-controller="Brands" asp-action="Index" class="btn btn-outline-secondary">
+                ← До брендів
+            </a>
+        }
+    </div>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        @if (isFiltered)
+        {
+            <text>У цього бренду ще немає автомобілів.</text>
+        }
+        else
+        {
+            <text>В автосалоні ще немає жодного автомобіля.</text>
+        }
+        <a asp-action="Create" asp-route-id="@ViewBag.BrandId">Додайте перший!</a>
+    </div>
+}
+else
+{
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.ModelName)</th>
+                        <th>@Html.DisplayNameFor(model => model.Year)</th>
+                        <th>@Html.DisplayNameFor(model => model.Price)</th>
+                        <th>Бренд</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="align-middle fw-semibold">@Html.DisplayFor(modelItem => item.ModelName)</td>
+                            <td class="align-middle">@Html.DisplayFor(modelItem => item.Year)</td>
+                            <td class="align-middle">$@item.Price.ToString("N0")</td>
+                            <td class="align-middle">@(item.Brand?.Name ?? "—")</td>
+                            <td class="text-end align-middle">
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info">✏️ Редагувати</a>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">🔍 Деталі</a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">🗑️ Видалити</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

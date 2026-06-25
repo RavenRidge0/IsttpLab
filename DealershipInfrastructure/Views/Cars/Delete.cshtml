@@ -1,0 +1,38 @@
+@model DealershipDomain.Model.Car
+
+@{
+    ViewData["Title"] = "Видалення автомобіля";
+}
+
+<h1>Видалення автомобіля</h1>
+
+<div class="alert alert-warning" role="alert">
+    ⚠️ Ви дійсно хочете видалити цей автомобіль? Цю дію неможливо скасувати!
+</div>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-header fw-semibold">Інформація про автомобіль</div>
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.ModelName)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.ModelName)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Year)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Year)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Price)</dt>
+            <dd class="col-sm-9">$@Model.Price.ToString("N0")</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Brand)</dt>
+            <dd class="col-sm-9">@(Model.Brand?.Name ?? "—")</dd>
+        </dl>
+    </div>
+</div>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <div class="d-flex gap-2">
+        <input type="submit" value="🗑️ Так, видалити" class="btn btn-danger" />
+        <a asp-action="Index" asp-route-id="@Model.BrandId" class="btn btn-outline-secondary">← Скасувати</a>
+    </div>
+</form>
